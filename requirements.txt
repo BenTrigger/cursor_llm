@@ -1,0 +1,7 @@
+flask
+openai
+llama-cpp-python
+PyYAML
+python-docx
+openpyxl
+pdfplumber 

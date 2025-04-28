@@ -1,0 +1,20 @@
+# LLM Configuration
+llm:
+  # Choose between 'openai' or 'llama'
+  backend: 'openai'
+  
+  # OpenAI Configuration
+  openai:
+    api_key: ${OPENAI_API_KEY}
+  
+  # Llama Configuration
+  llama:
+    model_path: ${LLAMA_MODEL_PATH}
+    context_size: ${LLAMA_CONTEXT_SIZE}
+    device: ${LLAMA_DEVICE}
+
+# Flask Configuration
+flask:
+  host: ${FLASK_HOST}
+  port: ${FLASK_PORT}
+  debug: ${FLASK_DEBUG} 
