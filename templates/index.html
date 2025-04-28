@@ -46,6 +46,15 @@
             border-radius: 5px;
             margin-bottom: 20px;
         }
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 10px;
+        }
+        .loading-spinner {
+            width: 2rem;
+            height: 2rem;
+        }
     </style>
 </head>
 <body>
@@ -80,7 +89,13 @@
                     <div class="mb-3">
                         <textarea class="form-control" id="questionInput" rows="3" placeholder="Enter your question here..."></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Ask</button>
+                    <button type="submit" class="btn btn-primary" id="askButton">Ask</button>
+                    <div class="loading mt-3" id="loadingIndicator">
+                        <div class="spinner-border loading-spinner text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Processing your question...</p>
+                    </div>
                 </form>
                 <div id="conversationHistory" class="conversation-history mt-3"></div>
             </div>
@@ -216,11 +231,17 @@
         document.getElementById('questionForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const question = document.getElementById('questionInput').value;
+            const askButton = document.getElementById('askButton');
+            const loadingIndicator = document.getElementById('loadingIndicator');
             
             if (!question) {
                 alert('Please enter a question');
                 return;
             }
+
+            // Disable the ask button and show loading indicator
+            askButton.disabled = true;
+            loadingIndicator.style.display = 'block';
 
             fetch('/ask', {
                 method: 'POST',
@@ -243,6 +264,11 @@
             .catch(error => {
                 console.error('Error:', error);
                 alert('Error processing question');
+            })
+            .finally(() => {
+                // Re-enable the ask button and hide loading indicator
+                askButton.disabled = false;
+                loadingIndicator.style.display = 'none';
             });
         });
 
